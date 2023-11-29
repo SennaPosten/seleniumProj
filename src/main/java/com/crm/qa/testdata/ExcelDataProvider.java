@@ -14,6 +14,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 
 public class ExcelDataProvider {
@@ -84,5 +87,12 @@ public class ExcelDataProvider {
 		}
 
 	}
+	
+	public static void WriteExcel() throws ParserConfigurationException, IOException, SAXException
+	{
+		//ExcelReportGenerator.
 
+	}
+	
+	//.generateExcelReport(“MyProject.xls”, “C:\\workspace”);
 }

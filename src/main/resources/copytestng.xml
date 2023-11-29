@@ -4,12 +4,14 @@
 
 	<listeners>
 		<listener class-name="com.crm.qa.reports.ExtentReporterNG"></listener>
-		<listener class-name="com.crm.qa.utilities.AnnotationTransformer"></listener>
+		<listener
+			class-name="com.crm.qa.utilities.AnnotationTransformer"></listener>
 	</listeners>
+
 	<test name="Testing">
 		<!-- <groups> <run> <exclude name = "Functionality" /> </run> </groups> -->
 		<classes>
-			<class name="com.crm.qa.testcases.PostenHomePageTestCase"></class>		
-				</classes>
+			<class name="com.crm.qa.testcases.TestcaseRuteKart"></class>
+		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

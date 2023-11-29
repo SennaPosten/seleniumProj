@@ -55,14 +55,6 @@ public  HashMap<Integer,String> readExcel() throws IOException {
 		   return Excelvalue;	
     
  
-    	
-    		
-    		
-    		
-    	
- 		   
-    		    
-
-}
+    	}
 		  
 }

@@ -6,35 +6,48 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.poi.hpsf.Date;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+//import com.aventstack.extentreports.ExtentReports;
+import org.testng.log4testng.Logger;
+
 //import org.testng.log4testng.Logger;
 import org.testng.ITestResult;
 
+//import com.crm.qa.testcases.chromedriver;
 import com.crm.qa.utilities.SeleniumActions;
 import com.crm.qa.utilities.TestUtils;
 import com.crm.qa.utilities.WebDriverListener;
-import com.crm.qa.reports.ExtentReporterNG;
+//import com.crm.qa.reports.ExtentReporterNG;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-
-
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.Markup;
+//import com.aventstack.extentreports.ExtentTest.
 
 public class TestBase {
 
@@ -51,16 +64,18 @@ public class TestBase {
 	static Workbook workbook = null;
 	static Sheet sheet = null;
 	static Row row = null;
-	private ITestResult result;
-	private ExtentTest extentTest;
-	private ExtentReports extent;
+//	private ITestResult result;
+//	private ExtentTest extentTest;
+//	private ExtentReports extent;
 
-	//protected static Logger log;
-
-	/*
-	 * protected ITestResult result; protected ExtentReports extent; protected
-	 * ExtentTest extentTest;
-	 */
+	protected static Logger log;
+	public static ITestResult result;
+	public static ExtentReports extent; 
+	public  static ExtentTest extentTest;
+	 
+	
+	
+	
 	public TestBase() {
 
 		try {
@@ -128,21 +143,29 @@ public class TestBase {
 		driver.manage().deleteAllCookies();
 		driver.close();
 	}
-
+	
+	
+	public   void startTest()
+	{
+		extent = new ExtentReports(System.getProperty("user.dir")+"ExtentReportResults.html",true);
+		extentTest = extent.startTest("ExtentDemo");
+	}
 	
 	
 	public void setExtend() {
-		extent = new ExtentReports(System.getProperty("user.dir") +"//test-output//Extent.html", true);
+	
+		extent = new ExtentReports(System.getProperty("user.dir") +"\\test-output\\NewExtentReport.html", true);
+		//test =extent.startTest("installapp");
 		Map<String, String> info = new HashMap<String, String>(); 
 		info.put("host name", "POS-S1C05-3-329");
-		info.put("user name", "PO30911"); 
+		info.put("user name", "Po30911"); 
 		info.put("Environment", "QA");
-		extent.addSystemInfo(info);
-		
-		
+		extent.addSystemInfo(info);	
+	
 	}
 	 
-	public void FormatResult() { 
+	public static void FormatResult() { 
+		System.out.println("-------------format result---------------");
 		if (result.getStatus() == ITestResult.FAILURE) {
 			extentTest.log(LogStatus.FAIL, "Failed test case is ::" + result.getName());
 			extentTest.log(LogStatus.FAIL, "Failed test case is ::" +result.getThrowable());
@@ -156,9 +179,64 @@ public class TestBase {
 			extentTest.log(LogStatus.PASS, "Passed testc case is ::" + result.getName());
 			}
 		extent.endTest(extentTest);
+		extent.flush();
+
 	}
 	
-	
+	 public static String getScreenhot(WebDriver driver, String screenshotName) throws Exception {
+		
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+			TakesScreenshot ts = (TakesScreenshot) driver;
+			File source = ts.getScreenshotAs(OutputType.FILE);
+	                //after execution, you could see a folder "FailedTestsScreenshots" under src folder
+			String destination = System.getProperty("user.dir") + "/FailedTestsScreenshots/"+screenshotName+dateName+".png";
+			File finalDestination = new File(destination);
+			FileUtils.copyFile(source, finalDestination);
+			return destination;
+		}
+	 
+	//Method for adding logs passed from test cases
+	 public void reportLog(String message) {    
+		 extentTest.log(LogStatus.INFO, message);//For extentTest HTML report
+
+	}
+	 public  String SCREENSHOT_LOCATION = "C:\\Screenshots\\test-image.png";
+	 public  void  captureScreenshot() throws IOException, InterruptedException {
+	//	 	extentTest = extent.startTest("capturescreenshot");
+//			System.setProperty("webdriver.gecko.driver", TestUtils.WORKSAPCE_PATH + "//drivers//geckodriver.exe");
+//			driver =new FirefoxDriver();
+			
+		 File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			File screenshotLocation = new File(SCREENSHOT_LOCATION);
+			FileUtils.copyFile(screenshot, screenshotLocation);
+			Thread.sleep(2000);
+			InputStream is = new FileInputStream(screenshotLocation);
+			byte[] imageBytes = IOUtils.toByteArray(is);
+			Thread.sleep(2000);
+			String base64 = Base64.getEncoder().encodeToString(imageBytes);
+			
+			//extentTest.addScreenCapture(SCREENSHOT_LOCATION);
+			//extentTest.log(LogStatus.INFO, "Snapshot below: " + extentTest.addBase64ScreenShot(base64));
+			//extentTest.log(LogStatus.INFO, "Snapshot below: " + extentTest.addScreenCapture(SCREENSHOT_LOCATION));			
+			//extentTest.log(Status.FAIL, extentTest.addBase64ScreenShot(SCREENSHOT_LOCATION));
+			//extent.endTest(extentTest);
+			//extent.flush();
+						
+		}
+		
+
+	 public static String getScreenshot( String screenshotName) throws Exception {
+         //below line is just to append the date format with the screenshot name to avoid duplicate names		
+         String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+	TakesScreenshot ts = (TakesScreenshot) driver;
+	File source = ts.getScreenshotAs(OutputType.FILE);
+         //after execution, you could see a folder "FailedTestsScreenshots" under src folder
+	String destination = System.getProperty("user.dir") + "/Screenshot/"+screenshotName+dateName+".png";
+	File finalDestination = new File(destination);
+	FileUtils.copyFile(source, finalDestination);
+         //Returns the captured file path
+	return destination;
+}
 	
 	public static String readexcelData() {
 		try {
@@ -209,4 +287,8 @@ public class TestBase {
 		}
 
 	}
-	 }
+	
+
+		 
+	
+ }

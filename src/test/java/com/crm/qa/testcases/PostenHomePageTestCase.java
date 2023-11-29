@@ -10,7 +10,6 @@ import com.crm.qa.pages.HomePage;
 import com.crm.qa.reports.ExtentReporterNG;
 
 import com.google.common.base.Verify;
-import com.crm.qa.reports.ExtentReporterNG;
 import com.crm.qa.testdata.ReadExcel;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -26,11 +25,11 @@ public class PostenHomePageTestCase extends TestBase {
 		super();
 	}
 
-
-	 @BeforeTest (alwaysRun = true)
-	 public void setExtentReport() { 
-		 setExtend();
-		 }
+//
+//	 @BeforeTest (alwaysRun = true)
+//	 public void setExtentReport() { 
+//		 setExtend();
+//		 }
 	 
 	
 	
@@ -156,7 +155,8 @@ public class PostenHomePageTestCase extends TestBase {
 
 
 	
-		  @AfterSuite(alwaysRun = true) public void tearDown() { // FormatResult();
+		  @AfterSuite(alwaysRun = true) public void tearDown() {
+		 FormatResult();
 		  tearDownMain(); }
 		 
 
