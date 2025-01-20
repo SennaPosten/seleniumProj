@@ -22,6 +22,8 @@ public class TestUtils {
 
 	public static final String WORKSAPCE_PATH = "C://Users//PO30911//Downloads//Selenium-POM-TestNG-Maven-master//Selenium-POM-TestNG-Maven-master//"; // provide path of workspace from your local machine
 
+	//public static final String WORKSAPCE_PATH = "C://Users//PO30911//Desktop//EclipseWorkspace//Old_rutekart//Rutekart_proj//Selenium-POM-TestNG-Maven-master//drivers"; // provide path of workspace from your local machine
+	
 	public static final String SCREENSHOT_PATH = WORKSAPCE_PATH + "//Screenshot//";
 
 	public static final String DateFormat = "yyyyMMddHH:mm:ss";

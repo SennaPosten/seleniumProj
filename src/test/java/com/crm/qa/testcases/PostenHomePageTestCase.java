@@ -7,6 +7,7 @@ import org.testng.annotations.*;
 
 import com.crm.qa.base.TestBase;
 import com.crm.qa.pages.HomePage;
+import com.crm.qa.pages.SaerchPackageNumberpage;
 import com.crm.qa.reports.ExtentReporterNG;
 
 import com.google.common.base.Verify;
@@ -42,58 +43,61 @@ public class PostenHomePageTestCase extends TestBase {
 	
 	
 	
-
-	  @Test(groups = { "ReadExcel" }) 
-	  public void TC001_readExcel() throws IOException, InterruptedException {
+	
+	  @Test(groups = { "ReadExcel" }) public void TC001_readExcel() throws  IOException, InterruptedException {
 		  homepage.readexcelMap();
-		  //SaerchPackageNumberpage.
-//		  homepage.switchtoLoginWindow(); 
-//		  homepage.login();
-//		  homepage.switchtoParentWindow();
-//		  homepage.Homepageverification();
-//		  homepage.verifyshipmentPageFields();
-//		  
-	 
-}
-
-
-	  @Test(groups = { "Functionality" }) 
-	  public void TC002_login() throws IOException, InterruptedException {
-		  homepage.switchtoLoginWindow(); 
-		  homepage.login();
-		  homepage.switchtoParentWindow();
+	  //SaerchPackageNumberpage. homepage.switchtoLoginWindow(); //
+	//  homepage.login(); // homepage.switchtoParentWindow(); //
+	  //homepage.Homepageverification(); // homepage.verifyshipmentPageFields();
 	  
+	  
+	  }
 	 
-}
-
-	  @Test(groups = { "Functionality" }) 
-	  public void TC003_Homepageverification() throws IOException, InterruptedException {
-	
-		  homepage.Homepageverification();
-		
-		  
-	 
-}
-
 	  
 
-	  @Test(groups = { "Functionality" }) 
-	  public void TC004_verifyshipmentPage() throws IOException, InterruptedException {
+	  
+	  
 
-		  homepage.verifyshipmentPageFields();
-		  
-	 
-}
+
+/*
+ * @Test(groups = { "Functionality" }) public void TC002_login() throws
+ * IOException, InterruptedException { homepage.switchtoLoginWindow();
+ * homepage.login(); homepage.switchtoParentWindow();
+ * 
+ * 
+ * }
+ * 
+ * @Test(groups = { "Functionality" }) public void TC003_Homepageverification()
+ * throws IOException, InterruptedException {
+ * 
+ * homepage.Homepageverification();
+ * 
+ * 
+ * 
+ * }
+ * 
+ * 
+ * 
+ * @Test(groups = { "Functionality" }) public void TC004_verifyshipmentPage()
+ * throws IOException, InterruptedException {
+ * 
+ * homepage.verifyshipmentPageFields();
+ * 
+ * 
+ * }
+ */
 	
 
-	  @Test(groups = { "Functionality" }) 
-	  public void TC005_verifyConsignmentInPHn() throws IOException, InterruptedException {
-	
-		  homepage.verifyConsignmentInPH();
-		
-		  
-	 
-}
+/*
+ * @Test(groups = { "Functionality" }) public void
+ * TC005_verifyConsignmentInPHn() throws IOException, InterruptedException {
+ * 
+ * homepage.verifyConsignmentInPH();
+ * 
+ * 
+ * 
+ * }
+ */
 	  
 	  
 
@@ -155,7 +159,7 @@ public class PostenHomePageTestCase extends TestBase {
 
 
 	
-		  @AfterSuite(alwaysRun = true) public void tearDown() {
+		  @AfterSuite(alwaysRun = true) public void tearDown() throws InterruptedException {
 		 FormatResult();
 		  tearDownMain(); }
 		 

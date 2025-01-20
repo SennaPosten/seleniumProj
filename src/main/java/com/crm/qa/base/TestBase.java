@@ -116,7 +116,7 @@ public class TestBase {
 		driver.manage().timeouts().implicitlyWait(TestUtils.IMPLICIT_WAIT, TimeUnit.SECONDS);
 		driver.manage().timeouts().pageLoadTimeout(TestUtils.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
 
-		driver.get(properties.getProperty("url"));
+		driver.get(properties.getProperty("url3"));
 
 		sele_Actions = new SeleniumActions();
 
@@ -129,7 +129,7 @@ public class TestBase {
 			chromeOptions.addArguments("--start-maximized");
 			return new ChromeDriver(chromeOptions);
 		} else if (browserName.equalsIgnoreCase("FF")) {
-			//System.setProperty("webdriver.gecko.driver", "C://Users//Desktop//geckodriver.exe");
+			///System.setProperty("webdriver.gecko.driver", "C://Users//Desktop//geckodriver.exe");
 			System.setProperty("webdriver.gecko.driver", TestUtils.WORKSAPCE_PATH + "//drivers//geckodriver.exe");
 			return new FirefoxDriver();
 		} else if (browserName.equalsIgnoreCase("IE")) {
@@ -139,9 +139,10 @@ public class TestBase {
 		return null;
 	}
 
-	public void tearDownMain() {
+	public void tearDownMain() throws InterruptedException {
 		driver.manage().deleteAllCookies();
 		driver.close();
+		Thread.sleep(5000);
 	}
 	
 	
@@ -249,7 +250,7 @@ public class TestBase {
 			String filepath=file.getAbsolutePath();
 			System.err.println("filepath"+filepath);
 			workbook = new XSSFWorkbook(input);
-			sheet = workbook.getSheet("test");
+			sheet = workbook.getSheet("test1");
 			
 			int totalRows = sheet.getLastRowNum() - sheet.getFirstRowNum();
 			for (int i = 0; i < totalRows; i++) {

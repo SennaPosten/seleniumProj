@@ -68,6 +68,8 @@ import java.util.Set;
 import java.util.Vector;
 
 import com.crm.qa.base.TestBase;
+import com.crm.qa.utilities.*;
+import com.google.common.base.Verify;
 import com.crm.qa.testdata.ReadExcel;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -88,6 +90,11 @@ public class HomePage extends TestBase {
 	public String PHConsignmentNr;
 	public String getStopIndexInMapForStopName;
 	public String unitNumber;
+	public String MyBringEmaiIdContactName;
+	public String Sales;
+	public String  ContactLanguage;
+	public String  ContactEditMobileNo;
+	
 	
 	//public string unitInput;
 	//static ExtentReports extent;
@@ -100,6 +107,7 @@ public class HomePage extends TestBase {
 	public HomePage() {
 		PageFactory.initElements(driver, this);
 	}
+	
 	//
 	 ReadExcel rd= new ReadExcel();
 	//Path of the excel file
@@ -109,35 +117,41 @@ public class HomePage extends TestBase {
 	public void readexcelMap() throws IOException {
 		Map<Integer,String> obj=rd.readExcel();
 		for(Entry<Integer, String> entry:obj.entrySet()) {
-			if(entry.getKey().equals(4)) {
+			if(entry.getKey().equals(0)) {
 				System.out.print("map value--------------"+entry.getValue());
 				usernamemapValue=entry.getValue();
 			}
 			
-			if(entry.getKey().equals(5)) {
+			if(entry.getKey().equals(1)) {
 				System.out.print("map value--------------"+entry.getValue());
 				passWordmapValue=entry.getValue();
 			}
 			
 			if(entry.getKey().equals(2)) {
 				System.out.print("map value--------------"+entry.getValue());
-				CNum=entry.getValue();
+				Sales=entry.getValue();
 			}
-			if(entry.getKey().equals(6)) {
+			if(entry.getKey().equals(3)) {
 				System.out.print("map value--------------"+entry.getValue());
-				expectedShipmentNumber=entry.getValue();
-			}if(entry.getKey().equals(3)) {
-				System.out.print("map value--------------"+entry.getValue());
-				expectedFromCity=entry.getValue();
+				ContactEditMobileNo=entry.getValue();
 			}
-			if(entry.getKey().equals(6)) {
+			if(entry.getKey().equals(4)) {
 				System.out.print("map value--------------"+entry.getValue());
-				PHConsignmentNr=entry.getValue();
+				ContactLanguage=entry.getValue();
 			}
-			
-			if(entry.getKey().equals(8)) {
+//			if(entry.getKey().equals(6)) {
+//				System.out.print("map value--------------"+entry.getValue());
+//				PHConsignmentNr=entry.getValue();
+//			}
+//			
+//			if(entry.getKey().equals(8)) {
+//				System.out.print("map value--------------"+entry.getValue());
+//				unitNumber=entry.getValue();
+//			}
+//			
+			if(entry.getKey().equals(5)) {
 				System.out.print("map value--------------"+entry.getValue());
-				unitNumber=entry.getValue();
+				MyBringEmaiIdContactName=entry.getValue();
 			}
 		}
 	}
@@ -278,10 +292,732 @@ public class HomePage extends TestBase {
 	@FindBy(xpath="//span[@data-bind='visible: routeDetailsMissingWarning2']")
 	WebElement routeDetailsMissingWarning2_txt;
 	
+	
+	@FindBy(xpath="//input[@id='username']")
+	WebElement UNSalesforce_txt;
+	
+	@FindBy(xpath="//input[@id='password']")
+	WebElement PWDSalesforce_txt;
+	
+	@FindBy(xpath="//input[@id='Login']")
+	WebElement LoginSalesforce_btn;
+
+	@FindBy(xpath="//button[@title='App Launcher']")
+	WebElement app_Launcher;
+	
+	@FindBy(xpath="//input[@placeholder='Search apps and items...']")
+	WebElement searchBox_txt;
+	
+	
+	@FindBy(xpath="//a[@data-label='Sales']")
+	WebElement sales_App_Launcher;
+	
+	
+	@FindBy(xpath="//span[text()='Contacts']")
+	WebElement Contacts_tab;
+	
+	@FindBy(xpath="(//input[@type='search'])[2]")
+	WebElement Contacts_SearchBox_txt;
+		
+	@FindBy(xpath="(//span/mark[text()='Senna'])[1]")
+	WebElement Contact_Search_Name;
+	
+	@FindBy(xpath="(//span[text()='Contacts'])[2]")
+	WebElement Contacts_title;
+			
+	@FindBy(xpath="//a[@title='Senna Kesava Raj Kamatchi Prabhakar']")
+	WebElement Contact_Name;
+	
+	@FindBy(xpath="//a[@title='Senna Kamatchi Prabhakar']")
+	WebElement ContactNameXpath;
+	
+	@FindBy(xpath="(//li/a[@id='detailTab__item'])[1]")
+	WebElement ContactsDetailsPage; 
+	
+	@FindBy(xpath="//button[@title='Edit Email']/span[@class='slds-grid highlights-primary-row inline-edit-trigger-icon']")
+	WebElement EditEmailIcon;
+	
+	@FindBy(xpath="//button[@title='Edit My Bring Userid']/span[@class='slds-grid highlights-primary-row inline-edit-trigger-icon']")
+	WebElement EditMyBringUserIdIcon;
+	
+	@FindBy(xpath="//input[@name='My_Bring_Userid__c']")
+	WebElement EditMyBringuseridTextbox;
+	
+	@FindBy(xpath="//button[@aria-label='Function / Working Area']")
+	WebElement EditSalesforceRoleTextbox;
+	
+	
+	@FindBy(xpath="//input[@name='Email']")
+	WebElement EditEmailTextbox;
+	
+	
+	@FindBy(xpath="//button[@name='Edit']")
+	WebElement Contact_Edit_btn;
+	
+	
+	@FindBy(xpath="//input[@name='MobilePhone']")
+	WebElement Contact_Edit_MobileNo;
+	
+	@FindBy(xpath="//button[@aria-label='Language']")
+	WebElement Contact_Edit_Language;
+	
+	@FindBy(xpath="//button[@aria-label='Callout Status']")
+	WebElement Contact_Edit_Callout_Status;
+	
+	
+	@FindBy(xpath="//input[@name='crm_Has_declined_Marketing_Activities__c']")
+	WebElement Contact_Edit_declined_Marketing_Activities;
+	
+	@FindBy(xpath="(//div[@class='slds-dueling-list__options'])[2]")
+	WebElement Contact_Edit_Marketing_Activities_Lookup;
+	
+	
+	@FindBy(xpath="//div[@data-value='SMS']")
+	WebElement Contact_Edit_Agreed_To_SMS;
+	
+	@FindBy(xpath="//div[@data-value='Email']")
+	WebElement Contact_Edit_Agreed_To_Email;
+	
+	@FindBy(xpath="//span[@title='Mybring']")
+	WebElement Contact_Edit_Agreed_To_Mybring;
+	
+	
+	@FindBy(xpath="//button[@title='Move to Chosen']")
+	WebElement Contact_Edit_Agreed_Move_to_elmnt;
+	//button[@title='Move to Chosen']
+	
+	@FindBy(xpath="//button[@name='CancelEdit']")
+	WebElement Contact_Edit_Cancel_btn;
+	
+	@FindBy(xpath="//button[@name='SaveEdit']")
+	WebElement Contact_Edit_Save_btn;
+	
+	@FindBy(xpath="//a[starts-with(@href, '/lightning/r/Account/')]")
+	WebElement Contact_CustomerName_In_details_page_link;
+	//div[@class='slds-grid']//a[@id='window']/span/slot/span/slot[text()='KOMPLETT DISTRIBUSJON AS']
+	//
+	@FindBy(xpath="(//lst-formatted-text/span)[1]")
+	WebElement Contact_CustomerNumber_In_CustomerName_page_link;
+	//td[@data-label='Customer Number']
+	@FindBy(xpath="(//dl[@class='slds-list_horizontal slds-wrap']/dt[text()='Customer Number:']//following-sibling::dd)[1]")
+	WebElement SalesforceConsumerRelatedAccounts;
+	
+	
+
+	@FindBy(xpath="//a[@href='/useradmin/account/profile/consent']")
+	WebElement MyBring_CommunicationAndConsent_tab;
+	
+	@FindBy(xpath="//input[@id='yesMarketing']")
+	WebElement MyBring_Marketing_Yes_RdBtn;
+
+	
+	
+	@FindBy(xpath="//input[@id='username']")
+	WebElement UNMyBring_txt;
+	
+	@FindBy(xpath="//input[@id='password']")
+	WebElement PWDMyBring_txt;
+	
+	@FindBy(xpath="//button[@type='submit']")
+	WebElement LoginMyBringe_btn;
+	
+	@FindBy(xpath="//span[text()='Senna Kamatchi Prabhakar']")
+	WebElement MyBring_Username;
+	
+	@FindBy(xpath="//a[@href='/useradmin/account/profile']//span[@data-mybicon-class='nav__icon']//*[local-name()='svg']")
+	WebElement MyBring_ProfileAndSettings;
+	
+	//span[text()='Profile and settings']
+	
+	
+	
+	@FindBy(xpath="//input[@name='workingArea']")
+	WebElement MyBring_RoleInProfileAndSettings;
+	
+	@FindBy(xpath="//button[@id='saveProfile']")
+	WebElement MyBring_SaveProfileAndSettings_btn;
+	
+	@FindBy(xpath="	//button[@id='saveConsent']")
+	WebElement MyBring_SaveConsent_btn;
+
+	
+	@FindBy(xpath="//a[@id='sidebarSettingsNav']")
+	WebElement MyBring_UserProfile_CustomerSettings;
+	
+	
+	@FindBy(xpath="//input[@id='mobileNumber']")
+	WebElement MyBring_getMobileNumber_value;
+	
+	@FindBy(xpath="//input[@id='language3']")
+	WebElement MyBring_getLanguage;
+	
+	@FindBy(xpath="//input[@id='emailCheckBox']")
+	WebElement MyBring_getEmail_chkbox;
+	
+	@FindBy(xpath="//input[@id='smsCheckBox']")
+	WebElement MyBring_getSMS_chkbox;
+	
+	
+	@FindBy(xpath="//input[@id='mybringCheckBox']")
+	WebElement MyBring_getMyBring_chkbox;
+	
+	@FindBy(xpath="//input[@id='noMarketing']")
+	WebElement MyBring_DeclinedMarketing_No_RdBtn;
+	
+	
+	
+	@FindBy(xpath="//table/tbody/tr/td[1]")
+	WebElement MyBring_CustomerSettings_CustomerNumber_txt;
+	
+	
 
 	
 	
 	
+	public void VerifySalesforceLogin() throws InterruptedException {
+		
+		UNSalesforce_txt.isDisplayed();
+		Thread.sleep(5000);	
+		//sUNSalesforce_txt.sendKeys("senna.kamatchi.prabhakar@posten.no.crmfull");
+		UNSalesforce_txt.clear();
+		UNSalesforce_txt.sendKeys(usernamemapValue);
+		Reporter.log("UserName of Salesforce  is entered");
+		Assert.assertTrue(true, "UserName of Salesforce  is entered; ");
+		Thread.sleep(5000);
+		PWDSalesforce_txt.clear();
+		//PWDSalesforce_txt.sendKeys("Novv!2024#");
+		PWDSalesforce_txt.sendKeys(passWordmapValue);
+		Reporter.log("Password of Salesforce  is entered");
+		Assert.assertTrue(true, "Password of Salesforce  is entered; ");
+		LoginSalesforce_btn.click();
+		Reporter.log("SalesForce Login button  is clicked; ");
+		Assert.assertTrue(true, "SalesForce Login button is clicked");
+		
+			
+	}
+	
+	public void VerifyContactsTab() throws InterruptedException {
+		Thread.sleep(5000);
+		app_Launcher.click();
+		Reporter.log("App Launcher  of Salesforce  is clicked; ");
+		Assert.assertTrue(true, "App Launcher of Salesforce  is clicked;  ");
+		Thread.sleep(5000);
+		searchBox_txt.clear();
+		searchBox_txt.sendKeys("Sales");
+		Reporter.log("Sales App  is entered in Search box; ");
+		Assert.assertTrue(true, "Sales App  is entered in Search box; ");
+		Thread.sleep(5000);
+		sales_App_Launcher.click();
+		Reporter.log("Sales App  is clicked from Searched list; ");
+		Assert.assertTrue(true, "Sales App  is clicked from Searched list; ");
+		Thread.sleep(5000);
+		Contacts_tab.click();
+		Thread.sleep(5000);
+		Reporter.log("Contacts tab  is clicked; ");
+		Assert.assertTrue(true, "Contacts tab  is clicked");
+		Thread.sleep(6000);
+		Contacts_title.isDisplayed();
+		Reporter.log("Contacts title tab  is displaying in Contacts Page; ");
+		Assert.assertTrue(true, "Contacts title tab  is displaying in Contacts Page;");
+		Thread.sleep(5000);
+	}
+	
+	
+	
+	
+	public void VerifyNavigateToContact() throws InterruptedException {
+		
+	 Contacts_SearchBox_txt.click();
+	 Thread.sleep(2000);
+	 Contacts_SearchBox_txt.clear();
+	 Contacts_SearchBox_txt.click();
+	 Thread.sleep(2000);
+	 Contacts_SearchBox_txt.clear();
+	 Contacts_SearchBox_txt.sendKeys("Senna Kamatchi Prabhakar");
+	 Thread.sleep(2000);
+	 Contacts_SearchBox_txt.sendKeys(Keys.ENTER);
+	 Thread.sleep(2000);
+	 ContactNameXpath.click();
+	 Reporter.log("Contacts Name   is Clicked in Contacts Page; ");
+	 Assert.assertTrue(true, "Contacts Name  is Clicked in Contacts Page;");
+	Thread.sleep(5000);
+	
+	
+	}
+	
+	public void VerifyByUpdateEmailIdMyBringMaildCleared() throws InterruptedException {
+		 Thread.sleep(2000);
+		 Contacts_SearchBox_txt.sendKeys(MyBringEmaiIdContactName);
+		 Contacts_SearchBox_txt.sendKeys(Keys.ENTER);
+		 Thread.sleep(2000);
+		 Contact_Name.click();
+		 Reporter.log("Contacts Name   is Clicked in Contacts Page; ");
+		 Assert.assertTrue(true, "Contacts Name  is Clicked in Contacts Page;");
+		Thread.sleep(2000);
+		Thread.sleep(2000);
+	ContactsDetailsPage.click();
+	Thread.sleep(2000);
+	Reporter.log("Contacts Details tab   is Clicked in Contacts Page; ");
+	// Assert.assertTrue(true, "Contacts Details tab is Clicked in Contacts Page;");
+    Contact_Edit_btn.click();
+    Reporter.log("Contacts Edit button   is Clicked in Contacts Page; ");
+	Thread.sleep(2000);
+	EditEmailTextbox.clear();
+	Thread.sleep(2000);
+	  Reporter.log("Contacts  Email   is edited in Contacts Page; ");
+	EditEmailTextbox.sendKeys("Sennaposten@gmail.com");
+	Thread.sleep(2000);
+	Reporter.log("Contacts  Email   is entered in Contacts Page; ");
+	Contact_Edit_Save_btn.click();
+	Thread.sleep(5000);
+	Reporter.log("Contacts  Email   is Saved in Contacts Page; ");
+	Contact_Edit_btn.click();
+	Thread.sleep(5000);
+	Reporter.log("Contacts Edit button   is Clicked in Contacts Page; ");
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+	Thread.sleep(5000);
+    js.executeScript("arguments[0].scrollIntoView();", EditMyBringuseridTextbox);
+	//Reporter.log("Contacts  My Bring User Id   is clicked in Contacts Page; ");
+	String EditMyBringUserid_txt=EditMyBringuseridTextbox.getText();
+	Thread.sleep(5000);
+	if(EditMyBringUserid_txt=="") {
+		
+		Assert.assertTrue(true, "MyBringUserid value is cleared");
+		Reporter.log("MyBringUserid value is cleared");
+	}
+	else {
+		Assert.assertTrue(false, "MyBringUserid value is not cleared");
+		Reporter.log("MyBringUserid value is not cleared");
+		
+	}
+	
+	
+	
+		
+		}
+	public void VerifyRoleUpdatedInSalesforceByUpdateRoleInMyBring() throws InterruptedException {
+		String SalesForceRoleValue ="Accounts";
+		ContactsDetailsPage.click();
+		Thread.sleep(2000);
+		Reporter.log("Contacts Details tab   is Clicked in Contacts Page; ");
+		// Assert.assertTrue(true, "Contacts Details tab is Clicked in Contacts Page;");
+	    Contact_Edit_btn.click();
+	    Reporter.log("Contacts Edit button   is Clicked in Contacts Page; ");
+		Thread.sleep(2000);
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Thread.sleep(5000);
+	    js.executeScript("arguments[0].scrollIntoView();", EditSalesforceRoleTextbox);
+		//Reporter.log("Contacts  My Bring User Id   is clicked in Contacts Page; ");
+		String EditMyBringUserid_txt=EditSalesforceRoleTextbox.getText();
+		Thread.sleep(5000);
+		if(SalesForceRoleValue.equals(EditMyBringUserid_txt)) {
+			
+			Assert.assertTrue(true, "Salesforce Role " +EditMyBringUserid_txt+" value is Same as My Bring");
+			Reporter.log("Salesforce Role " +EditMyBringUserid_txt+" value is Same as My Bring" ); 
+		}
+		else {
+			Assert.assertTrue(true, "Salesforce Role value is not Same as My Bring");
+			Reporter.log("Salesforce Role value is not Same as My Bring" +EditSalesforceRoleTextbox);
+			
+		}
+		
+	}
+	
+	
+	
+	
+	public void VerifyEditContactMobileLanguageMarketingActivities() throws InterruptedException {
+		Thread.sleep(5000);
+		Contact_Edit_btn.click();
+		Reporter.log("Contacts Edit button   is Clicked in Contacts Page; ");
+		Assert.assertTrue(true, "Contacts  Edit button   is Clicked in Contacts Page;");
+		Thread.sleep(5000);
+		Contact_Edit_MobileNo.clear();
+		Thread.sleep(5000);
+		Contact_Edit_MobileNo.sendKeys("+4796660607");
+		Reporter.log("Contacts MobileNo   is updated in Contacts Page; ");
+		Thread.sleep(5000);
+		
+		Contact_Edit_Save_btn.click();
+		Reporter.log(" Save button is clicked in Contacts Edit Page; ");
+		Assert.assertTrue(true, "Save button is clicked in Contacts Edit Page;");
+		
+	}
+	
+	public void VerifyCalloutStatus()  throws InterruptedException{
+		String ExpectedCalloutStatus="Callout Finished";
+		Contact_Edit_btn.click();
+		Thread.sleep(2000);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Thread.sleep(5000);
+	    js.executeScript("arguments[0].scrollIntoView();", Contact_Edit_Callout_Status);
+	   // Contact_Edit_Callout_Status.sendKeys("--None--");
+	  //  Contact_Edit_Callout_Status.sendKeys(Keys.ENTER);
+		// Thread.sleep(2000);
+	    //Thread.sleep(5000);
+		//Contact_Edit_Save_btn.click();
+		//Thread.sleep(5000);
+		//Contact_Edit_btn.click();
+		//Thread.sleep(5000);
+		js.executeScript("arguments[0].scrollIntoView();", EditSalesforceRoleTextbox);
+		EditSalesforceRoleTextbox.sendKeys("Warehouse");
+		EditSalesforceRoleTextbox.sendKeys(Keys.ENTER);
+		EditSalesforceRoleTextbox.sendKeys(Keys.TAB);
+		Thread.sleep(10000);
+		Contact_Edit_Save_btn.click();
+		Thread.sleep(10000);
+		
+	//	Select objSelect1 = new Select(EditSalesforceRoleTextbox);
+		//objSelect1.selectByValue("Warehouse");
+		Contact_Edit_btn.click();
+		Thread.sleep(10000);
+		js.executeScript("arguments[0].scrollIntoView();", Contact_Edit_Callout_Status);
+		
+		String CalloutStatusAfterupdate=Contact_Edit_Callout_Status.getText();
+		if(ExpectedCalloutStatus.equals(CalloutStatusAfterupdate)) {
+			Reporter.log(" Callout Status After update is dislaying "   +CalloutStatusAfterupdate+  "  in Contacts Edit Page as Expected; ");
+			
+		}
+		else
+			Reporter.log(" Callout Status After update is dislaying " +CalloutStatusAfterupdate+  " in Contacts Edit Page and its not expected; ");
+		Thread.sleep(10000);
+		
+	}
+	
+	public void VerifyCalloutStatusForSystemUsers()  throws InterruptedException{
+		String ExpectedCalloutStatus="--None--";
+		 Thread.sleep(2000);
+		 Contacts_SearchBox_txt.sendKeys(MyBringEmaiIdContactName);
+		 Contacts_SearchBox_txt.sendKeys(Keys.ENTER);
+		 Thread.sleep(2000);
+		 Contact_Name.click();
+		 Reporter.log("Contacts Name   is Clicked in Contacts Page; ");
+		 Assert.assertTrue(true, "Contacts Name  is Clicked in Contacts Page;");
+		Thread.sleep(2000);
+		
+		Contact_Edit_btn.click();
+		Thread.sleep(2000);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Thread.sleep(5000);
+	    //js.executeScript("arguments[0].scrollIntoView();", Contact_Edit_Callout_Status);
+	    EditEmailTextbox.clear();
+		Thread.sleep(2000);
+		  Reporter.log("Contacts  Email   is edited in Contacts Page; ");
+		EditEmailTextbox.sendKeys("Sennaposten@posten.no");
+		Thread.sleep(2000);
+		Reporter.log("Contacts  Email   is entered in Contacts Page; ");
+		js.executeScript("arguments[0].scrollIntoView();", EditSalesforceRoleTextbox);
+		Thread.sleep(2000);
+		EditSalesforceRoleTextbox.sendKeys("IT");
+		EditSalesforceRoleTextbox.sendKeys(Keys.ENTER);
+		EditSalesforceRoleTextbox.sendKeys(Keys.TAB);
+		Thread.sleep(10000);
+		Contact_Edit_Save_btn.click();
+		Thread.sleep(10000);
+		
+	//	Select objSelect1 = new Select(EditSalesforceRoleTextbox);
+		//objSelect1.selectByValue("Warehouse");
+		Contact_Edit_btn.click();
+		Thread.sleep(10000);
+		js.executeScript("arguments[0].scrollIntoView();", Contact_Edit_Callout_Status);
+		
+		String CalloutStatusAfterupdate=Contact_Edit_Callout_Status.getText();
+		if(ExpectedCalloutStatus.equals(CalloutStatusAfterupdate)) {
+			Reporter.log(" Callout Status After update is dislaying "   +CalloutStatusAfterupdate+  "  in Contacts Edit Page as Expected; ");
+			
+		}
+		else
+			Reporter.log(" Callout Status After update is dislaying " +CalloutStatusAfterupdate+  " in Contacts Edit Page and its not expected; ");
+		Thread.sleep(10000);
+		
+	}
+	
+	public void VerifyUpdatedMyBringAttributesInSalesforce() throws InterruptedException {
+		Thread.sleep(3000);
+		Contact_Edit_btn.click();
+		
+		
+		Thread.sleep(3000);
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Thread.sleep(5000);
+		js.executeScript("arguments[0].scrollIntoView();", Contact_Edit_Marketing_Activities_Lookup);
+	String SalesforceMarketingLookup=Contact_Edit_Marketing_Activities_Lookup.getText();
+		System.out.println("SalesforceMarketingLookup is "+SalesforceMarketingLookup);
+		
+		String SalesforceMarketingSMS=Contact_Edit_Agreed_To_SMS.getText();
+		if (SalesforceMarketingLookup.contains(SalesforceMarketingSMS)) {
+			Reporter.log(" SalesForce Marketing SMS is displaying in lookup as expected in Contacts Edit Page; ");
+			//Verify.verify(true, "SalesForce Marketing SMS is displaying in lookup as expected in Contacts Edit Page; ");
+		}
+		else
+			Reporter.log(" SalesForce Marketing SMS is not displaying in lookup as expected in Contacts Edit Page; ");
+		//Verify.verify(false, " SalesForce Marketing SMS is not displaying in lookup as expected in Contacts Edit Page;  ");
+		
+		String SalesforceMarketinEmail=Contact_Edit_Agreed_To_Email.getText();
+		
+		if (SalesforceMarketingLookup.contains(SalesforceMarketinEmail)) {
+			Reporter.log(" SalesForce Marketing Email is displaying in lookup as expected in Contacts Edit Page; ");
+			//Verify.verify(true, "SalesForce Marketing Email is displaying in lookup as expected in Contacts Edit Page; ");
+		}
+		else
+			Reporter.log(" SalesForce Marketing Email is not displaying in lookup as expected in Contacts Edit Page; ");
+		//Verify.verify(false, "SalesForce Marketing Email is not displaying in lookup as expected in Contacts Edit Page; ");
+		
+		String SalesforceMarketinMyBring=Contact_Edit_Agreed_To_Mybring.getText();
+		
+		if (SalesforceMarketingLookup.contains(SalesforceMarketinMyBring)) {
+			Reporter.log(" SalesForce Marketing MyBring is  displaying in lookup as expected in Contacts Edit Page; ");
+			//Verify.verify(true, "SalesForce Marketing MyBring  is not displaying in lookup as expected in Contacts Edit Page; ");
+		}
+		else
+			Reporter.log(" SalesForce Marketing MyBring is  not displaying in lookup as expected in Contacts Edit Page; ");
+		//Verify.verify(false, "SalesForce Marketing MyBring is  displaying in lookup as expected in Contacts Edit Page; ");
+		
+		
+		String SalesForceContactLanguage= Contact_Edit_Language.getText();
+		if (SalesForceContactLanguage.equals(ContactLanguage)) {
+			Reporter.log(" SalesForce Language is same as MyBring Language in Contacts Edit Page; ");
+			//Verify.verify(true, "SalesForce Language is same as MyBring Language in Contacts Edit Page;");
+		}
+		else
+			Reporter.log(" SalesForce Language is not same as MyBring Language in Contacts Edit Page; ");
+		//Verify.verify(false, "SalesForce Language is not same as MyBring Language in Contacts Edit Page;");
+		Thread.sleep(5000);
+		
+//		String SalesforceContactMobileValue=Contact_Edit_MobileNo.getText();
+//		Thread.sleep(3000);
+//		if (SalesforceContactMobileValue==ContactEditMobileNo) {
+//			Reporter.log(" SalesForce Mobile No is same as MyBring Mobile No in Contacts Edit Page; ");
+//			//Verify.verify(true, "SalesForce Mobile No is same as MyBring Mobile No in Contacts Edit Page; ");
+//		}
+//		else
+//			Reporter.log(" SalesForce Mobile No is not same as MyBring Mobile No in Contacts Edit Page; ");
+//		//Verify.verify(false, " SalesForce Mobile No is not same as MyBring Mobile No in Contacts Edit Page; ");
+		
+	}
+	public void NaviageToMyBring() throws InterruptedException {
+		Thread.sleep(5000);
+		
+		driver.get(properties.getProperty("url4"));
+		Thread.sleep(5000);
+		
+	}
+	
+	
+	public void NaviageToSalesforce() throws InterruptedException {
+		Thread.sleep(5000);
+		
+		driver.get(properties.getProperty("url3"));
+		Thread.sleep(5000);
+		
+	}
+	
+	
+public void VerifyMyBringLogin() throws InterruptedException {
+		
+		UNMyBring_txt.isDisplayed();
+		Thread.sleep(2000);	
+		UNMyBring_txt.sendKeys("sennakesavaraj.kamatchiprabhakar@tcs.com");
+		//UNSalesforce_txt.sendKeys(usernamemapValue);
+		Reporter.log("UserName of MyBring  is entered");
+		Assert.assertTrue(true, "UserName of MyBring  is entered; ");
+		Thread.sleep(2000);
+		PWDMyBring_txt.sendKeys("MonOfDec@123");
+		//PWDSalesforce_txt.sendKeys(passWordmapValue);
+		Reporter.log("Password of MyBring  is entered");
+		Assert.assertTrue(true, "Password of MyBring  is entered; ");
+		LoginMyBringe_btn.click();
+		Reporter.log("MyBring Login button  is clicked; ");
+		Assert.assertTrue(true, "MyBring Login button is clicked");
+		
+			
+	}
+
+
+public void VerifyMyBringNavigateToUserProfilePage() throws InterruptedException {
+	
+	Thread.sleep(5000);
+	MyBring_Username.click();
+	Reporter.log("MyBring Username  is clicked in home page; ");
+	Assert.assertTrue(true, "MyBring Username  is clicked in home page");
+	MyBring_ProfileAndSettings.click();
+	Reporter.log("MyBring Profile And Settings  is clicked in home page; ");
+	Assert.assertTrue(true, "MyBring Profile And Settings  is clicked in home page");
+		
+}
+
+
+public void VerifyMyBringByEnterRoleInUserProfilePage() throws InterruptedException {
+	
+	Thread.sleep(5000);
+	MyBring_RoleInProfileAndSettings.clear();
+	Thread.sleep(5000);
+	MyBring_RoleInProfileAndSettings.sendKeys("Accounts");	
+	//Reporter.log("MyBring Username  is clicked in home page; ");
+	
+	Reporter.log("Role is entered in MyBring Profile And Settings page; ");
+	Thread.sleep(2000);
+	MyBring_SaveProfileAndSettings_btn.click();
+	Thread.sleep(2000);	
+	Reporter.log("Save Button  is clicked in MyBring Profile And Settings page; ");
+}
+
+public void VerifyByEnterAttributesInMyBringUserProfilePage() throws InterruptedException {
+
+	Thread.sleep(5000);
+	MyBring_getLanguage.click();
+	Reporter.log("Language is Selected in MyBring Profile And Settings page; ");
+	Thread.sleep(5000);
+	MyBring_SaveProfileAndSettings_btn.click();
+	Thread.sleep(5000);
+	Reporter.log("Save Button is clicked in  MyBring Profile And Settings page; ");
+	MyBring_CommunicationAndConsent_tab.click();
+	Thread.sleep(5000);
+	
+	MyBring_Marketing_Yes_RdBtn.click();
+	Reporter.log("Marketing Button is selected in  MyBring Consents page; ");
+	Thread.sleep(5000);
+	if (MyBring_getEmail_chkbox.isSelected()){
+		Reporter.log("Email Checkbox is selected in MyBring; ");	
+	}
+	else {
+	MyBring_getEmail_chkbox.click();
+	}
+	Thread.sleep(5000);
+	if (MyBring_getSMS_chkbox.isSelected()){
+		Reporter.log("SMS Checkbox is selected in MyBring; ");	
+	}
+	else {
+		MyBring_getSMS_chkbox.click();
+	}
+	
+
+	Thread.sleep(5000);
+	MyBring_getMyBring_chkbox.click();
+	Thread.sleep(5000);
+
+	
+	MyBring_SaveConsent_btn.click();
+	Thread.sleep(5000);
+	Reporter.log("Save Button is selected in  MyBring Consents page; ");
+	
+}
+
+
+
+
+
+//public String CustomerNumber_value;
+
+public String  VerifyMyBringNavigateToUserProfilePageCustumerSettings(String CustomerNoMyBring) throws InterruptedException {
+	
+	Thread.sleep(2000);
+	MyBring_UserProfile_CustomerSettings.click();
+	Thread.sleep(2000);
+	Reporter.log("MyBring Username  is clicked in home page; ");
+	Assert.assertTrue(true, "MyBring Username  is clicked in home page");
+	String CustomerNumber_value=MyBring_CustomerSettings_CustomerNumber_txt.getText();
+	Thread.sleep(2000);
+	System.out.println("CustomerNumber_value is "+CustomerNumber_value);
+	Reporter.log("MyBring CustomerNumber_value  is ; "+CustomerNumber_value );
+	Assert.assertTrue(true, "MyBring CustomerNumber_value  is "+CustomerNumber_value);
+	//String  SalesforceCustomerNumber_value = VerifySalesforceCustomerNumber(SalesforceCustomerNumber);
+	return CustomerNumber_value;
+		
+}
+//public String CustomerNumber=CustomerNumber_value;
+
+public void VerifySalesforceCustomerNumber() throws InterruptedException {
+	Thread.sleep(3000);
+	JavascriptExecutor executor = (JavascriptExecutor)driver;
+	executor.executeScript("arguments[0].click();", Contact_CustomerName_In_details_page_link); 
+	
+	//Contact_CustomerName_In_details_page_link.click();
+	Thread.sleep(5000);
+	//SalesforceConsumerRelatedAccounts.isDisplayed();
+	//executor.executeScript("arguments[0].click();", SalesforceConsumerRelatedAccounts); 
+	//SalesforceConsumerRelatedAccounts.click();
+	Thread.sleep(2000);
+	String CustomerNumber=Contact_CustomerNumber_In_CustomerName_page_link.getText();
+	Thread.sleep(2000);
+	System.out.println("CustomerNumber of salesforce "+CustomerNumber);
+	//return CustomerNumber;
+	
+	
+}
+
+
+/*
+ * public String CompareSalesForceAndMyBringCustomerNo() {
+ * 
+ * 
+ * if(CustomerNumber==CustomerNumber_value) {
+ * 
+ * Reporter.log("CustomerNumber is same as Salesforce CustomerNumber");
+ * 
+ * } else {
+ * Reporter.log("CustomerNumber is not same as Salesforce CustomerNumber"); }
+ *
+}*/
+
+//public String VerifyCompareSalesforceCustomerNumber(String SalesforceCustomerNumber, String MyBringCustomerNumber) throws InterruptedException {
+//	
+//	String  SalesforceCustomerNumber_value = VerifySalesforceCustomerNumber(SalesforceCustomerNumber);
+//	//String MybringCustomerNumberValue= VerifyMyBringNavigateToUserProfilePageCustumerSettings(MyBringCustomerNumber);
+//	
+//	System.out.println("SalesforceCustomerNumber is "+SalesforceCustomerNumber_value);
+	//System.out.println("MybringCustomerNumberValue is "+MybringCustomerNumberValue);
+	
+// if (MybringCustomerNumberValue.equals(SalesforceCustomerNumber_value)) {
+//	 
+//	 Assert.assertTrue(true, "MybringCustomerNumberValue and SalesforceCustomerNumber_value are Same");
+// }
+// else {
+//	 Assert.assertTrue(false, "MybringCustomerNumberValue and SalesforceCustomerNumber_value are not Same");
+//	 
+// }
+//return MybringCustomerNumberValue;
+//return SalesforceCustomerNumber_value;
+	
+	
+//}
+
+public void VerifySalesforceFieldsInMyBringUserProfilePage() throws InterruptedException {
+	
+	
+	Thread.sleep(5000);
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript("arguments[0].scrollIntoView();", MyBring_getLanguage);
+		
+	
+	//String MyBringContactLanguage= MyBring_getLanguage.getText();
+   /* boolean MyBring_SelectedLanguage=MyBring_getLanguage.isSelected();
+    try {
+	
+		Assert.assertTrue(MyBring_SelectedLanguage, "MyBring Language is not same as Salesforce Language in Contacts Edit Page; ");
+		Reporter.log(" MyBring Language is same as Salesforce Language in Contacts Edit Page; ");
+	
+    }
+    catch(AssertionError e)
+	 {
+		Reporter.log(e.getMessage());
+		
+	}
+	Thread.sleep(5000);
+	*/
+	
+	String MyBring_MobileNumber=MyBring_getMobileNumber_value.getAttribute("value");
+	Thread.sleep(3000);
+	if (MyBring_MobileNumber.equals(ContactEditMobileNo)  ) {
+		Reporter.log(" MyBring Mobile No is same as Salesforce Mobile No in Contacts Edit Page; ");
+	}
+	else
+		Reporter.log(" MyBring Mobile No is not same as Salesforce Mobile No in Contacts Edit Page; ");
+	
+		Thread.sleep(2000);
+	}
 	
 	public void VerifyPlotting() throws InterruptedException {
 	
@@ -359,7 +1095,7 @@ public void VerifyRuter() throws InterruptedException, IOException {
 	public void VerifyUnitNOinRuteplanleggerTab() throws InterruptedException {
 		Thread.sleep(2000);	
 		unitInput_txt.clear();
-		unitInput_txt.sendKeys(CNum);
+		unitInput_txt.sendKeys("101892");
 		Reporter.log("Unit Number 101892  is entered");
 		Thread.sleep(5000);
 		btnSearchUnitOrRoute.click();
@@ -390,7 +1126,7 @@ public void VerifyRuter() throws InterruptedException, IOException {
 	
 	public void verifyTheNumberOfRutesInTable1() throws InterruptedException {
 		
-		//Select RuteDropdownofTable1 = new Select(driver.findElement(By.id("cbxRpl1")));
+		// RuteDropdownofTable1 = new Select(driver.findElement(By.id("cbxRpl1")));
 		
 		
 //		Select se = new Select(driver.findElement(By.id("cbxRpl1")));
@@ -423,8 +1159,12 @@ public void VerifyRuter() throws InterruptedException, IOException {
 		Thread.sleep(2000);	
 		Reporter.log("Table1 Detailer button clicked");
 		Thread.sleep(2000);	
+		
 		Select objSelect =new Select(Frekvens_drpdwn);
+		
 		objSelect.selectByVisibleText("B");
+		
+		
 		Reporter.log("Table1 Frekvens_drpdwn Selected");
 		Thread.sleep(2000);	
 		TableOppdater1_drpdwn.isDisplayed();
@@ -906,6 +1646,15 @@ public void PlantheStopInRuteplanleggerwithSelectedValue() throws InterruptedExc
 
 
 	public void login() throws InterruptedException{
+		String currenturl=driver.getCurrentUrl();
+		System.out.print("CurrentUrl"+currenturl);
+		((JavascriptExecutor) driver).executeScript("window.focus();");
+		driver.manage().window().maximize();
+		((JavascriptExecutor)driver).executeScript("arguments[0].checked = true;", userName);;
+		
+		Thread.sleep(5000);
+		userName.click();
+		userName.isDisplayed();
 		userName.sendKeys(usernamemapValue);
 		Thread.sleep(5000);
 		password1.sendKeys(passWordmapValue);
@@ -922,18 +1671,31 @@ public void PlantheStopInRuteplanleggerwithSelectedValue() throws InterruptedExc
 		LoginSubmit.click();
 		Thread.sleep(5000);
 		for(String winHandle : driver.getWindowHandles()){
+			
 		    driver.switchTo().window(winHandle);
 			Thread.sleep(5000);
 		}
 	}
 	
 
-	public void switchtoLoginWindow() {
+	public void switchtoLoginWindow() throws InterruptedException {
+		
+		 
+		
+		String parentWindowHandler = driver.getWindowHandle(); 
+		String subWindowHandler = null;
 
-		for(String winHandle : driver.getWindowHandles()){
-		    driver.switchTo().window(winHandle);
-		    
+		Set<String> handles = driver.getWindowHandles();
+		Iterator<String> iterator = handles.iterator();
+		System.out.print("iterator-----"+iterator);
+		while (iterator.hasNext()){
+		    subWindowHandler = iterator.next();
+		    driver.switchTo().window(subWindowHandler);
+
+		    System.out.println(subWindowHandler);
 		}
+		 	
+		
 	}
 
 	public void switchtoParentWindow() throws InterruptedException {
@@ -948,6 +1710,7 @@ public void PlantheStopInRuteplanleggerwithSelectedValue() throws InterruptedExc
 	
 	public void Homepageverification() throws InterruptedException {
 		SearchPackageNumberLink.isDisplayed();
+		//SearchPackageNumberLink.getText();
 		Thread.sleep(5000);
 		SearchPackageNumberLink.click();
 		Thread.sleep(5000);
@@ -964,7 +1727,7 @@ public void PlantheStopInRuteplanleggerwithSelectedValue() throws InterruptedExc
 		System.out.println("ActualFromCity is"+ActualFromCity);
 		Assert.assertEquals(ActualFromCity, expectedFromCity,"From City code not matches");
 //		Thread.sleep(5000);
-//		ToOPenButton.click();
+		ToOPenButton.click();
 //		Thread.sleep(5000);
 	}
 	
